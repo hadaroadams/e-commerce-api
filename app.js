@@ -10,6 +10,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
+const mongoSanitize = require("express-mongo-sanitize");
 const limiter = rateLimiter({
   windowMS: 15 * 60 * 1000,
   max: 100,
@@ -34,6 +35,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(helmet());
 app.use(xss());
 app.use(cors());
+app.use(mongoSanitize());
 app.use(cookieParser(process.env.JWT_SECRET));
 app.use(fileUpload());
 

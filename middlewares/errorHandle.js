@@ -2,6 +2,7 @@ const { StatusCodes } = require("http-status-codes");
 const { object } = require("webidl-conversions");
 
 const errorHandle = (err, req, res, next) => {
+  console.log(err);
   const customError = {
     msg: err.message || "something went wrong",
     status: err.status || StatusCodes.INTERNAL_SERVER_ERROR,
