@@ -5,6 +5,7 @@ const app = express();
 const cookieParser = require("cookie-parser");
 
 //middle wares
+
 // security
 const helmet = require("helmet");
 const cors = require("cors");
@@ -22,6 +23,7 @@ const mongoose = require("mongoose");
 const connectDB = require("./config/dbconn");
 const authRoutes = require("./routers/authRoutes");
 const usersRoutes = require("./routers/userRoutes");
+const productRoutes = require("./routers/productRoutes");
 const notFound = require("./middlewares/notFound");
 const errorHandle = require("./middlewares/errorHandle");
 
@@ -42,6 +44,7 @@ app.use(fileUpload());
 // Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", usersRoutes);
+app.use("/api/v1/products", productRoutes);
 
 app.use(notFound);
 app.use(errorHandle);

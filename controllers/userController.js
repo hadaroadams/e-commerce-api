@@ -51,6 +51,7 @@ const updateUser = async (req, res, next) => {
   } = req;
   if (!(name || email))
     return next(new BadRequest("Please provide name and email"));
+  
   const user = await User.findOne({ _id: userId });
 
   user.name = name;

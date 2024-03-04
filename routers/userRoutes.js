@@ -13,6 +13,7 @@ Router.route("/").get(authentication, getAllUser);
 Router.route("/showMe").get(authentication, showCurrentUser);
 Router.route("/updateUserPassword").patch(authentication, changePassword);
 Router.route("/updateUser").patch(authentication, updateUser);
+Router.route("/upload").patch(authentication, updateUser);
 Router.route("/:id").get(authentication, getSingleUser);
 
 module.exports = Router;
