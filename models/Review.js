@@ -1,4 +1,4 @@
-const { Schema, Types } = require("mongoose");
+const { Schema, Types, model, default: mongoose } = require("mongoose");
 
 const ReviewSchema = new Schema(
   {
@@ -17,9 +17,17 @@ const ReviewSchema = new Schema(
       required: true,
     },
     user: {
-      type: Types.ObjectId,
+      type: Schema.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    product: {
+      type: Schema.ObjectId,
+      ref: "Product",
       required: true,
     },
   },
-  { timestamps: {} }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
+
+module.exports = model("Review", ReviewSchema);

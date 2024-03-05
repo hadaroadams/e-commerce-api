@@ -17,7 +17,9 @@ const getAllproducts = async (req, res) => {
 
 const getSingleProducts = async (req, res, next) => {
   const { id } = req.params;
-  const product = await Product.findOne({ _id: id });
+  const product = await Product.findOne({ _id: id }).populate("reviews");
+  console.log(product.reviews);
+  // console.log(product);
   if (!product) return next(new NotFound(`Product with id:${id} not found`));
   res.status(StatusCodes.OK).json({ product });
 };
@@ -36,11 +38,12 @@ const updateProduct = async (req, res, next) => {
   res.status(StatusCodes.OK).json({ product });
 };
 
-const deleteProduct = async (req, res) => {
+const deleteProduct = async (req, res, next) => {
   const { id } = req.params;
 
-  const product = await Product.findByIdAndDelete(id);
+  const product = await Product.findOne({ _id: id });
   if (!product) return next(new NotFound(`Product with id:${id} not found`));
+  await product.remove();
   res
     .status(StatusCodes.OK)
     .json({ msg: "Product has successfully been deleted" });

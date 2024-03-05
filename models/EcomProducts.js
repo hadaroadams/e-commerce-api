@@ -1,4 +1,5 @@
 const { model, Schema, Types } = require("mongoose");
+const Review = require("./Review");
 
 const EcomProductSchema = new Schema(
   {
@@ -68,6 +69,19 @@ const EcomProductSchema = new Schema(
   },
   {
     timestamps: true,
+    toJSON: { virtuals: true },
   }
 );
+
+EcomProductSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "product",
+  justOne: false,
+});
+
+EcomProductSchema.pre("delete", async function () {
+  console.log(await this);
+  await Review.deleteMany({ product: this._id });
+});
 module.exports = model("EcomProducts", EcomProductSchema);
