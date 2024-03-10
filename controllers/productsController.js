@@ -41,9 +41,10 @@ const updateProduct = async (req, res, next) => {
 const deleteProduct = async (req, res, next) => {
   const { id } = req.params;
 
-  const product = await Product.findOne({ _id: id });
+  const product = await Product.findOneAndDelete({ _id: id });
   if (!product) return next(new NotFound(`Product with id:${id} not found`));
-  await product.remove();
+  // await product.deleteOne();
+  // console.log(product);
   res
     .status(StatusCodes.OK)
     .json({ msg: "Product has successfully been deleted" });

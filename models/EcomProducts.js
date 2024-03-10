@@ -80,8 +80,12 @@ EcomProductSchema.virtual("reviews", {
   justOne: false,
 });
 
-EcomProductSchema.pre("delete", async function () {
-  console.log(await this);
-  await Review.deleteMany({ product: this._id });
+EcomProductSchema.pre("findOneAndDelete", async function (next) {
+  console.log("deleting");
+  // console.log(await this._id, await this.name);
+  const doc = await this.model.findOne(this.getQuery());
+  console.log(doc);
+  await Review.deleteMany({ product: doc._id });
+  next();
 });
 module.exports = model("EcomProducts", EcomProductSchema);
