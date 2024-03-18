@@ -25,6 +25,7 @@ const authRoutes = require("./routers/authRoutes");
 const usersRoutes = require("./routers/userRoutes");
 const productRoutes = require("./routers/productRoutes");
 const reviewRoutes = require("./routers/reviewRoutes");
+const orderRoutes = require("./routers/orderRoutes");
 const notFound = require("./middlewares/notFound");
 const errorHandle = require("./middlewares/errorHandle");
 
@@ -47,6 +48,7 @@ app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/users", usersRoutes);
 app.use("/api/v1/products", productRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 app.use(notFound);
 app.use(errorHandle);
