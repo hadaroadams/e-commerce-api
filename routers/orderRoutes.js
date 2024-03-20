@@ -6,12 +6,12 @@ const {
   updateOrder,
   currentOrder,
 } = require("../controllers/orderController");
-const { authentication } = require("../middlewares/authentication");
+const { authentication, authorizePermission } = require("../middlewares/authentication");
 const Router = express.Router();
 
 Router.route("/")
   .post(authentication, createOrder)
-  .get(authentication, getAllOrders)
+  .get(authentication,authorizePermission("admin"), getAllOrders)
   .get(authentication, currentOrder);
 Router.route("/:id")
   .get(authentication, getSingleOrder)

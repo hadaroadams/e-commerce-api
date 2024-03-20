@@ -1,4 +1,4 @@
-const { Unauthenticated } = require("../errors");
+const { Unauthenticated, Unauthorized } = require("../errors");
 const { isTokenValid } = require("../utilities");
 
 const authentication = async (req, res, next) => {
@@ -9,10 +9,17 @@ const authentication = async (req, res, next) => {
   try {
     const { name, userId, role } = isTokenValid({ token });
     req.user = { name, userId, role };
-    next()
+    next();
   } catch (error) {
     next(new Unauthenticated("Authentication"));
   }
 };
+const authorizePermission = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role))
+      next(new Unauthorized("Unauthorized to access this route"));
+    next();
+  };
+};
 
-module.exports = { authentication };
+module.exports = { authentication, authorizePermission };

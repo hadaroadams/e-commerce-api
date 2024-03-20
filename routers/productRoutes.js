@@ -1,5 +1,5 @@
 const express = require("express");
-const { authentication } = require("../middlewares/authentication");
+const { authentication ,authorizePermission} = require("../middlewares/authentication");
 const {
   getAllproducts,
   createProduct,
